@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 
 class MainHomePage extends StatelessWidget {
+  const MainHomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Main Home Page',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFF39DFF9),
+        backgroundColor: const Color(0xFF39DFF9),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -33,13 +35,13 @@ class MainHomePage extends StatelessWidget {
                 height: 200, // Adjust the height as needed
               ),
             ),
-            SizedBox(height: 30), // Increased spacing
-            Text(
+            const SizedBox(height: 30), // Increased spacing
+            const Text(
               'Welcome!',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 30), // Increased spacing
+            const SizedBox(height: 30), // Increased spacing
             ElevatedButton(
               onPressed: () {
                 // Navigate to the Login page
@@ -54,13 +56,13 @@ class MainHomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                       10), // Adjust border radius as needed
                 ),
-                padding: EdgeInsets.symmetric(
-                    horizontal: 20, vertical: 15), // Adjust padding
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 50, vertical: 14), // Adjust padding
               ),
-              child: Text(
+              child: const Text(
                 'Get Started',
                 style: TextStyle(
-                  fontSize: 18, // Increased font size
+                  fontSize: 20, // Increased font size
                   color: Colors.white, // White color for the text
                   fontWeight: FontWeight.bold, // Bold text
                 ),

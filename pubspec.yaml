@@ -55,6 +55,8 @@ flutter:
   assets:
     - images/sltb_logo.png
     - images/bus.png
+    - images/bus.jpeg
+    - images/TransparencyDark640.png
     
 
   # The following line ensures that the Material Icons font is

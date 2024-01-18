@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'create_account_page.dart';
 import 'home_page.dart';
 
+// ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _rememberMe = false;
+
+  LoginPage({Key? key}) : super(key: key);
 
   void _showErrorMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -19,111 +23,148 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Login',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: null, // Remove the title
         centerTitle: true,
-        backgroundColor: Colors.lightBlue, // Light blue color at the top
+        backgroundColor: const Color(0xFF39DFF9), // Light blue color at the top
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: Colors.white, // White color in the middle part
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF39DFF9), Colors.white],
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Container with a red line above the image
-                Container(
-                  height: 4,
-                  color: Colors.red,
-                ),
-                SizedBox(height: 10),
-                // Image widget to display the picture above the username area
-                Image.asset(
-                  'images/sltb_logo.png', // Provide the path to your image asset
-                  width: 200, // Adjust the width as needed
-                  height: 200, // Adjust the height as needed
-                ),
-                SizedBox(height: 10),
-                // Container with a red line below the image
-                Container(
-                  height: 4,
-                  color: Colors.red,
-                ),
-                SizedBox(height: 10),
-                // Container to fill the space between the two red lines with red color
-                Container(
-                  height: 10, // Adjust the height as needed
-                  color: Colors.red,
-                ),
-                SizedBox(height: 10),
-                TextField(
-                  controller: _usernameController,
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                const SizedBox(height: 40),
+                const Text(
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                  textAlign: TextAlign.center,
-                  textAlignVertical: TextAlignVertical.center,
                 ),
-                SizedBox(height: 10),
-                TextField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                const SizedBox(height: 10),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Image.asset(
+                    'images/TransparencyDark640.png', // Replace with your transparent image asset path
+                    height: 40, // Adjust the height as needed
+                    width: double
+                        .infinity, // Expand the image to the width of the container
                   ),
-                  obscureText: true,
-                  textAlign: TextAlign.center,
-                  textAlignVertical: TextAlignVertical.center,
                 ),
-                SizedBox(height: 20),
-                // Styled login button
+                const SizedBox(height: 10),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    textAlign: TextAlign.center,
+                    textAlignVertical: TextAlignVertical.center,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    textAlignVertical: TextAlignVertical.center,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: _rememberMe,
+                          onChanged: (value) {
+                            _rememberMe = value!;
+                          },
+                        ),
+                        const Text('Remember me'),
+                      ],
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        // Implement forgot password logic
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.blue,
+                      ),
+                      child: const Text('Forgot Password'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    // Get the values from the text fields
                     String username = _usernameController.text.trim();
                     String password = _passwordController.text.trim();
 
-                    // Check if username and password are not empty
                     if (username.isNotEmpty && password.isNotEmpty) {
-                      // Implement login logic
-                      // For simplicity, navigate to the home page
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => HomePage()),
                       );
                     } else {
-                      // Display an error message if either username or password is empty
-                      _showErrorMessage(context, 'You should add username and password to proceed');
+                      _showErrorMessage(context,
+                          'You should add username and password to proceed');
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue, // Blue color for the button
+                    backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 15),
                   ),
-                  child: Text(
-                    'Log In',
+                  child: const Text(
+                    'Login',
                     style: TextStyle(
-                      color: Colors.white, // White color for the text
-                      fontWeight: FontWeight.bold, // Bold text
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
-                    // Navigate to the Create Account page
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CreateAccountPage()),
+                      MaterialPageRoute(
+                          builder: (context) => CreateAccountPage()),
                     );
                   },
-                  child: Text('Create a New Account'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.black,
+                  ),
+                  child: const Text('Create a New Account'),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
               ],
             ),
           ),

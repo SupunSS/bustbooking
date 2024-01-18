@@ -3,11 +3,13 @@ import 'main_home_page.dart';
 import 'search_buses_page.dart'; // Import the main home page
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: const Text('Home Page'),
         centerTitle: true,
         backgroundColor: Colors.lightBlue, // Light blue color at the top
         actions: [
@@ -17,7 +19,7 @@ class HomePage extends StatelessWidget {
               // Navigate to the MainHomePage on log out
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => MainHomePage()),
+                MaterialPageRoute(builder: (context) => const MainHomePage()),
               );
             },
           ),
@@ -31,11 +33,11 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'welcome to the ticket booking app',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   // Navigate to the Search Buses page
@@ -44,7 +46,7 @@ class HomePage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => SearchBusesPage()),
                   );
                 },
-                child: Text('Search for Buses'),
+                child: const Text('Search for Buses'),
               ),
             ],
           ),
