@@ -5,6 +5,7 @@ class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CreateAccountPageState createState() => _CreateAccountPageState();
 }
 
@@ -162,9 +163,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Phone Number',
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
             ),
