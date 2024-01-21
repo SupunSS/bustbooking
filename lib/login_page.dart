@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'create_account_page.dart';
+import './create_account_page.dart';
 import 'home_page.dart';
 
 // ignore: must_be_immutable
-class LoginPage extends StatelessWidget {
+class Login extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _rememberMe = false;
 
-  LoginPage({Key? key}) : super(key: key);
+  Login({Key? key}) : super(key: key);
 
   void _showErrorMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
               children: [
                 const SizedBox(height: 40),
                 const Text(
-                  'Login',
+                  'Log In',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ class LoginPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Image.asset(
                     'images/TransparencyDark640.png', // Replace with your transparent image asset path
-                    height: 40, // Adjust the height as needed
+                    height: 50, // Adjust the height as needed
                     width: double
                         .infinity, // Expand the image to the width of the container
                   ),
@@ -127,7 +127,8 @@ class LoginPage extends StatelessWidget {
                     if (username.isNotEmpty && password.isNotEmpty) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()),
                       );
                     } else {
                       _showErrorMessage(context,
@@ -143,7 +144,7 @@ class LoginPage extends StatelessWidget {
                         horizontal: 40, vertical: 15),
                   ),
                   child: const Text(
-                    'Login',
+                    'Log In',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -156,11 +157,11 @@ class LoginPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CreateAccountPage()),
+                          builder: (context) => const CreateAccountPage()),
                     );
                   },
                   style: TextButton.styleFrom(
-                    foregroundColor: Colors.black,
+                    foregroundColor: const Color(0xFF01AEF3),
                   ),
                   child: const Text('Create a New Account'),
                 ),

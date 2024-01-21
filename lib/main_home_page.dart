@@ -26,7 +26,6 @@ class MainHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Add an Image widget with your image asset
             Align(
               alignment: Alignment.center,
               child: Image.asset(
@@ -47,7 +46,7 @@ class MainHomePage extends StatelessWidget {
                 // Navigate to the Login page
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => Login()),
                 );
               },
               style: ElevatedButton.styleFrom(

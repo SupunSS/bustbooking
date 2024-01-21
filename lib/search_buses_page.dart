@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class SearchBusesPage extends StatelessWidget {
+  const SearchBusesPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search for Buses'),
+        title: const Text('Search for Buses'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Search Buses Page'),
       ),
     );
