@@ -19,7 +19,7 @@ class BusSchedule extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: Image.asset(
-                  'images/sltb_logo.png', // Replace with your image asset path
+                  'images/pngwing.com.png', // Replace with your image asset path
                   fit: BoxFit.cover, // Adjust the fit as needed
                 ),
               ),
