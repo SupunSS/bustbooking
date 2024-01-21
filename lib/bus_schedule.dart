@@ -8,10 +8,11 @@ class BusSchedule extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bus Schedule'),
-        backgroundColor: const Color(0xFF39DFF9),
+        foregroundColor: Color(0xFFFFFFFF),
+        backgroundColor: const Color(0xFFE14D42),
       ),
       body: Container(
-        color: const Color(0xFF39DFF9),
+        color: const Color(0xFFE14D42),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

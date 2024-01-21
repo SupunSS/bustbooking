@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search'),
+        foregroundColor: Color.fromARGB(255, 236, 229, 229),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -27,14 +28,14 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         ],
-        backgroundColor: const Color(0xFF39DFF9),
+        backgroundColor: Color(0xFFE14D42),
       ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFF39DFF9), Colors.white],
+            colors: [Color(0xFFE14D42), Colors.white],
           ),
         ),
         child: Center(
@@ -140,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Color(0xFFC23D34),
                     minimumSize: const Size(150, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),

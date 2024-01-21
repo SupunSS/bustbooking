@@ -25,7 +25,7 @@ class Login extends StatelessWidget {
       appBar: AppBar(
         title: null, // Remove the title
         centerTitle: true,
-        backgroundColor: const Color(0xFF39DFF9), // Light blue color at the top
+        backgroundColor: const Color(0xFFC23D34), // Light blue color at the top
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -33,7 +33,7 @@ class Login extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Color(0xFF39DFF9), Colors.white],
+              colors: [Color(0xFFC23D34), Colors.white],
             ),
           ),
           child: Padding(
@@ -48,7 +48,7 @@ class Login extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Color(0xFFFFFFFF),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -136,7 +136,7 @@ class Login extends StatelessWidget {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Color(0xFFC23D34),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),

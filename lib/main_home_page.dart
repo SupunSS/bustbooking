@@ -13,14 +13,14 @@ class MainHomePage extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xFF39DFF9),
+        backgroundColor: Color(0xFFA30D02),
       ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFF39DFF9), Colors.white],
+            colors: [Color(0xFFA30D02), Colors.white],
           ),
         ),
         child: Column(
@@ -50,7 +50,7 @@ class MainHomePage extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Blue color for the button
+                backgroundColor: Color(0xFFA30D02), // Blue color for the button
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(
                       10), // Adjust border radius as needed

@@ -39,7 +39,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Color(0xFFC23D34),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -47,7 +47,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Colors.lightBlue, Colors.white],
+              colors: [Color(0xFFC23D34), Colors.white],
             ),
           ),
           child: Padding(
@@ -78,7 +78,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     _validateFields();
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Color(0xFFC23D34),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
