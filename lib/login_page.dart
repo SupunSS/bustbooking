@@ -14,7 +14,7 @@ class Login extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: Colors.red, // Set the background color to red
+        backgroundColor: Colors.red,
       ),
     );
   }
@@ -23,9 +23,9 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: null, // Remove the title
+        title: null,
         centerTitle: true,
-        backgroundColor: const Color(0xFFC23D34), // Light blue color at the top
+        backgroundColor: const Color(0xFFC23D34),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -44,21 +44,11 @@ class Login extends StatelessWidget {
               children: [
                 const SizedBox(height: 40),
                 const Text(
-                  'Log In',
+                  'Login',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFFFFFF),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Image.asset(
-                    'images/TransparencyDark640.png', // Replace with your transparent image asset path
-                    height: 50, // Adjust the height as needed
-                    width: double
-                        .infinity, // Expand the image to the width of the container
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -71,6 +61,8 @@ class Login extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      filled: true,
+                      fillColor: const Color(0xFFD5D5D5),
                     ),
                     textAlign: TextAlign.center,
                     textAlignVertical: TextAlignVertical.center,
@@ -86,6 +78,8 @@ class Login extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      filled: true,
+                      fillColor: const Color(0xFFD5D5D5),
                     ),
                     obscureText: true,
                     textAlign: TextAlign.center,
@@ -125,6 +119,10 @@ class Login extends StatelessWidget {
                     String password = _passwordController.text.trim();
 
                     if (username.isNotEmpty && password.isNotEmpty) {
+                      // Clear the text controllers
+                      _usernameController.clear();
+                      _passwordController.clear();
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -136,7 +134,7 @@ class Login extends StatelessWidget {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFC23D34),
+                    backgroundColor: const Color(0xFFC23D34),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -144,7 +142,7 @@ class Login extends StatelessWidget {
                         horizontal: 40, vertical: 15),
                   ),
                   child: const Text(
-                    'Log In',
+                    'Login',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

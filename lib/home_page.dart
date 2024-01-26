@@ -9,9 +9,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String selectedMonth = '';
-  String selectedDate = '';
-  String selectedYear = '';
+  String? selectedMonth;
+  String? selectedDate;
+  String? selectedYear;
+  String errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,8 @@ class _HomePageState extends State<HomePage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
+                    filled: true,
+                    fillColor: Colors.grey[300], // Ash color
                   ),
                   textAlign: TextAlign.center,
                   textAlignVertical: TextAlignVertical.center,
@@ -64,48 +67,53 @@ class _HomePageState extends State<HomePage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
+                    filled: true,
+                    fillColor: Colors.grey[300], // Ash color
                   ),
                   textAlign: TextAlign.center,
                   textAlignVertical: TextAlignVertical.center,
                 ),
                 const SizedBox(height: 10),
 
-                // Text Inputs for Date (MM/DD/YYYY)
+                // Month, Date, and Year Inputs
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Month Input
+                    // Month Dropdown and Textbox
                     Expanded(
-                      child: TextField(
+                      child: DropdownButton<String>(
+                        value: selectedMonth,
+                        hint: const Text('Month'),
+                        items: List.generate(12, (index) {
+                          return DropdownMenuItem<String>(
+                            value: (index + 1).toString(),
+                            child: Text((index + 1).toString()),
+                          );
+                        }),
                         onChanged: (value) {
-                          selectedMonth = value;
+                          setState(() {
+                            selectedMonth = value;
+                          });
                         },
-                        decoration: InputDecoration(
-                          labelText: 'Month',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        textAlign: TextAlign.center,
-                        textAlignVertical: TextAlignVertical.center,
                       ),
                     ),
                     const SizedBox(width: 10),
 
-                    // Date Input
+                    // Date Dropdown and Textbox
                     Expanded(
-                      child: TextField(
+                      child: DropdownButton<String>(
+                        value: selectedDate,
+                        hint: const Text('Date'),
+                        items: List.generate(30, (index) {
+                          return DropdownMenuItem<String>(
+                            value: (index + 1).toString(),
+                            child: Text((index + 1).toString()),
+                          );
+                        }),
                         onChanged: (value) {
-                          selectedDate = value;
+                          setState(() {
+                            selectedDate = value;
+                          });
                         },
-                        decoration: InputDecoration(
-                          labelText: 'Date',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        textAlign: TextAlign.center,
-                        textAlignVertical: TextAlignVertical.center,
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -116,11 +124,14 @@ class _HomePageState extends State<HomePage> {
                         onChanged: (value) {
                           selectedYear = value;
                         },
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: 'Year',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
+                          filled: true,
+                          fillColor: Colors.grey[300], // Ash color
                         ),
                         textAlign: TextAlign.center,
                         textAlignVertical: TextAlignVertical.center,
@@ -133,11 +144,22 @@ class _HomePageState extends State<HomePage> {
                 // Search Buses Button
                 ElevatedButton(
                   onPressed: () {
-                    // Redirect to Bus Schedule page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BusSchedule()),
-                    );
+                    // Check if any of the fields are empty
+                    if (selectedMonth == null ||
+                        selectedDate == null ||
+                        selectedYear == null) {
+                      setState(() {
+                        errorMessage = 'All fields must be filled!';
+                      });
+                    } else {
+                      // Redirect to Bus Schedule page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BusSchedule(),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
@@ -149,6 +171,19 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: const Text('Search Buses'),
                 ),
+
+                // Display Error Message
+                if (errorMessage.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(
+                      errorMessage,
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),

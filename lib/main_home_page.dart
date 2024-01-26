@@ -9,18 +9,18 @@ class MainHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Main Home Page',
+          '',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFFA30D02),
+        backgroundColor: const Color(0xFFE31607),
       ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFA30D02), Colors.white],
+            colors: [Color(0xFFE31607), Colors.white],
           ),
         ),
         child: Column(
@@ -29,15 +29,20 @@ class MainHomePage extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: Image.asset(
-                'images/bus.png', // Replace with your actual image asset path
+                'images/buss.png', // Replace with your actual image asset path
                 width: 200, // Adjust the width as needed
                 height: 200, // Adjust the height as needed
               ),
             ),
             const SizedBox(height: 30), // Increased spacing
             const Text(
-              'Welcome!',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              'Welcome to Swift Tickets,',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            const Text(
+              'where your journey begins and seamless bus ticket booking meets convenience at every stop!',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30), // Increased spacing
@@ -50,7 +55,7 @@ class MainHomePage extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFA30D02), // Blue color for the button
+                backgroundColor: Color(0xFFA90E03),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(
                       10), // Adjust border radius as needed

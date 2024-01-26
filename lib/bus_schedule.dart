@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Bus_seats.dart'; // Import the BusSeats page
 
 class BusSchedule extends StatelessWidget {
   const BusSchedule({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class BusSchedule extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: Image.asset(
-                  'images/pngwing.com.png', // Replace with your image asset path
+                  'images/pngwing.com.png',
                   fit: BoxFit.cover, // Adjust the fit as needed
                 ),
               ),
@@ -41,7 +42,7 @@ class BusSchedule extends StatelessWidget {
       String busName, String route, String time, BuildContext context) {
     return InkWell(
       onTap: () {
-        _handleBusScheduleTap(context, 'Tapped on $busName');
+        _handleBusScheduleTap(context, busName);
       },
       child: Container(
         width: double.infinity,
@@ -83,8 +84,14 @@ class BusSchedule extends StatelessWidget {
     );
   }
 
-  void _handleBusScheduleTap(BuildContext context, String message) {
-    print(message);
+  void _handleBusScheduleTap(BuildContext context, String busName) {
+    // Navigate to the BusSeats page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BusSeats(busName: busName),
+      ),
+    );
   }
 }
 

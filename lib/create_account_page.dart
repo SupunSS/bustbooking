@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 
 class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage({super.key});
+  const CreateAccountPage({Key? key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _CreateAccountPageState createState() => _CreateAccountPageState();
 }
 
@@ -39,7 +38,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFFC23D34),
+        backgroundColor: Color(0xFFF5A59F),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -47,7 +46,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Color(0xFFC23D34), Colors.white],
+              colors: [Color(0xFFF5A59F), Colors.white],
             ),
           ),
           child: Padding(
@@ -78,7 +77,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     _validateFields();
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFC23D34),
+                    backgroundColor: Color.fromARGB(255, 224, 20, 6),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -228,6 +227,14 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         _addressError.isEmpty &&
         _usernameError.isEmpty &&
         _passwordError.isEmpty) {
+      // Clear the text controllers
+      _firstNameController.clear();
+      _lastNameController.clear();
+      _phoneNumberController.clear();
+      _addressController.clear();
+      _usernameController.clear();
+      _passwordController.clear();
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Login()),
