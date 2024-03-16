@@ -1,17 +1,20 @@
 // ignore: file_names
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'main_home_page.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: BusSeats(busName: 'Your Bus Name'),
-  ));
-}
+// void main() {
+//   runApp(const MaterialApp(
+//     home: BusSeats(busName: 'Your Bus Name'),
+//   ));
+// }
 
 class BusSeats extends StatefulWidget {
+  final String id;
   final String busName;
 
-  const BusSeats({Key? key, required this.busName}) : super(key: key);
+  const BusSeats({Key? key, required this.busName, required this.id})
+      : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -196,5 +199,21 @@ class _BusSeatsState extends State<BusSeats> {
         );
       },
     );
+  }
+
+  void bookSeats() async {
+    Dio dio = Dio();
+    try {
+      Response response = await dio.post(
+        'http://localhost:5000/api/buses/bookseats',
+        data: {
+          'id': widget.id,
+          'seats': selectedSeats,
+        },
+      );
+      print(response.data);
+    } on DioException catch (e) {
+      print(e.error);
+    }
   }
 }

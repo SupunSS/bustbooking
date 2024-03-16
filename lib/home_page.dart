@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:bustbooking/models/bus_model.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'bus_schedule.dart';
 
@@ -13,6 +17,9 @@ class _HomePageState extends State<HomePage> {
   String? selectedDate;
   String? selectedYear;
   String errorMessage = '';
+
+  TextEditingController fromController = TextEditingController();
+  TextEditingController toController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +64,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   textAlign: TextAlign.center,
                   textAlignVertical: TextAlignVertical.center,
+                  controller: toController,
                 ),
                 const SizedBox(height: 10),
 
@@ -72,6 +80,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   textAlign: TextAlign.center,
                   textAlignVertical: TextAlignVertical.center,
+                  controller: fromController,
                 ),
                 const SizedBox(height: 10),
 
@@ -153,12 +162,7 @@ class _HomePageState extends State<HomePage> {
                       });
                     } else {
                       // Redirect to Bus Schedule page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BusSchedule(),
-                        ),
-                      );
+                      _handelSarchBusesTap(context);
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -188,6 +192,41 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void _handelSarchBusesTap(BuildContext context) async {
+    String from = fromController.text;
+    String to = toController.text;
+
+    Dio dio = Dio();
+
+    List<Bus> buses = [];
+
+    // Fetch the buses from the server
+    Response response = await dio.post('http://localhost:5000/api/buses/search',
+        data: {"from": from, "destination": to});
+    Map<String, dynamic> jsonMap = json.decode(response.toString());
+
+    jsonMap['data'].forEach((bus) {
+      buses.add(Bus(
+        destination: bus['destination'],
+        from: bus['from'],
+        year: bus['year'],
+        month: bus['month'],
+        date: bus['date'],
+        departureTime: bus['departureTime'],
+        busName: bus['name'],
+        route: bus['route'],
+      ));
+    });
+
+    //Navigate to the BusSchedule page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BusSchedule(from: from, to: to),
       ),
     );
   }

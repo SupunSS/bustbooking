@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import './create_account_page.dart';
 import 'home_page.dart';
+import 'dart:convert';
 
 // ignore: must_be_immutable
 class Login extends StatelessWidget {
@@ -115,23 +117,7 @@ class Login extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    String username = _usernameController.text.trim();
-                    String password = _passwordController.text.trim();
-
-                    if (username.isNotEmpty && password.isNotEmpty) {
-                      // Clear the text controllers
-                      _usernameController.clear();
-                      _passwordController.clear();
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomePage()),
-                      );
-                    } else {
-                      _showErrorMessage(context,
-                          'You should add username and password to proceed');
-                    }
+                    _login(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFC23D34),
@@ -170,5 +156,41 @@ class Login extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _login(BuildContext context) async {
+    String username = _usernameController.text.trim();
+    String password = _passwordController.text.trim();
+
+    if (username.isNotEmpty && password.isNotEmpty) {
+      Dio dio = Dio();
+      try {
+        Response response = await dio.post(
+          'http://localhost:5000/api/users/login',
+          data: {
+            "username": _usernameController.text,
+            "password": _passwordController.text,
+          },
+        );
+        Map<String, dynamic> jsonMap = json.decode(response.toString());
+
+        print(jsonMap['success']);
+
+        if (jsonMap['success'] == true) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
+        } else {
+          _showErrorMessage(context, jsonMap['message']);
+        }
+      } catch (e) {
+        print("Error: ${e}"); // Log the error for debugging
+        // Handle the error appropriately
+      }
+    } else {
+      _showErrorMessage(
+          context, 'You should add username and password to proceed');
+    }
   }
 }

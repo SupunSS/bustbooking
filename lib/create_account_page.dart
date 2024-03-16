@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 
@@ -206,7 +207,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     );
   }
 
-  void _validateFields() {
+  void _validateFields() async {
     setState(() {
       _firstNameError =
           _firstNameController.text.isEmpty ? 'First name is required' : '';
@@ -228,17 +229,37 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         _usernameError.isEmpty &&
         _passwordError.isEmpty) {
       // Clear the text controllers
-      _firstNameController.clear();
-      _lastNameController.clear();
-      _phoneNumberController.clear();
-      _addressController.clear();
-      _usernameController.clear();
-      _passwordController.clear();
+      // _firstNameController.clear();
+      // _lastNameController.clear();
+      // _phoneNumberController.clear();
+      // _addressController.clear();
+      // _usernameController.clear();
+      // _passwordController.clear();
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Login()),
-      );
+      print("running");
+
+      Dio dio = Dio();
+      Response response =
+          await dio.post('http://localhost:5000/api/users/register', data: {
+        "firstname": _firstNameController.text,
+        "lastname": _lastNameController.text,
+        "phone": _phoneNumberController.text,
+        "address": _addressController.text,
+        "username": _usernameController.text,
+        "password": _passwordController.text
+      });
+
+      if (response.data['success'] == "true") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Login()),
+        );
+      }
+
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => Login()),
+      // );
     }
   }
 

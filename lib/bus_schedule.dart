@@ -1,15 +1,65 @@
+import 'dart:convert';
+import 'package:bustbooking/Bus_seats.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'Bus_seats.dart'; // Import the BusSeats page
 
-class BusSchedule extends StatelessWidget {
-  const BusSchedule({Key? key}) : super(key: key);
+class BusSchedule extends StatefulWidget {
+  final String from;
+  final String to;
+
+  BusSchedule({Key? key, required this.from, required this.to})
+      : super(key: key);
+
+  @override
+  _BusScheduleState createState() => _BusScheduleState();
+}
+
+class _BusScheduleState extends State<BusSchedule> {
+  late Future<List<Widget>> _busScheduleFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _busScheduleFuture = _fetchBusSchedule();
+  }
+
+  Future<List<Widget>> _fetchBusSchedule() async {
+    Dio dio = Dio();
+
+    List<Widget> widgets = [];
+
+    try {
+      Response response = await dio.post(
+          'http://localhost:5000/api/buses/search',
+          data: {"from": widget.from, "destination": widget.to});
+      Map<String, dynamic> jsonResponse = json.decode(response.toString());
+
+      if (jsonResponse.containsKey('data')) {
+        List<dynamic> busesData = jsonResponse['data'];
+        busesData.forEach((bus) {
+          widgets.add(_buildBusScheduleItem(
+            bus['_id'],
+            bus['name'],
+            bus['route'],
+            bus['departuretime'],
+            context,
+          ));
+        });
+      }
+    } catch (e) {
+      print('Error fetching bus schedule: $e');
+      // Handle error
+    }
+
+    return widgets;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bus Schedule'),
-        foregroundColor: Color(0xFFFFFFFF),
+        foregroundColor: Colors.white,
         backgroundColor: const Color(0xFFE14D42),
       ),
       body: Container(
@@ -22,15 +72,25 @@ class BusSchedule extends StatelessWidget {
                 width: double.infinity,
                 child: Image.asset(
                   'images/pngwing.com.png',
-                  fit: BoxFit.cover, // Adjust the fit as needed
+                  fit: BoxFit.cover,
                 ),
               ),
               const SizedBox(height: 20),
-              _buildBusScheduleItem('Bus 1', 'Route A', '10:00 AM', context),
-              _buildBusScheduleItem('Bus 2', 'Route B', '11:30 AM', context),
-              _buildBusScheduleItem('Bus 3', 'Route C', '1:00 PM', context),
-              _buildBusScheduleItem('Bus 4', 'Route D', '2:30 PM', context),
-              _buildBusScheduleItem('Bus 5', 'Route E', '4:00 PM', context),
+              FutureBuilder<List<Widget>>(
+                future: _busScheduleFuture,
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Widget>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return Column(
+                      children: snapshot.data ?? [],
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -38,11 +98,11 @@ class BusSchedule extends StatelessWidget {
     );
   }
 
-  Widget _buildBusScheduleItem(
-      String busName, String route, String time, BuildContext context) {
+  Widget _buildBusScheduleItem(String? id, String? busName, String? route,
+      String? time, BuildContext context) {
     return InkWell(
       onTap: () {
-        _handleBusScheduleTap(context, busName);
+        _handleBusScheduleTap(context, id ?? '', busName ?? '');
       },
       child: Container(
         width: double.infinity,
@@ -66,17 +126,26 @@ class BusSchedule extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Bus Name: $busName',
+                'Bus Name: ${busName ?? ''}',
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 0, 0, 0)),
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
               ),
               const SizedBox(height: 8.0),
-              Text('Route: $route',
-                  style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
+              Text(
+                'Route: ${route ?? ''}',
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
+              ),
               const SizedBox(height: 8.0),
-              Text('Departure Time: $time',
-                  style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
+              Text(
+                'Departure Time: ${time ?? ''}',
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
+              ),
             ],
           ),
         ),
@@ -84,19 +153,13 @@ class BusSchedule extends StatelessWidget {
     );
   }
 
-  void _handleBusScheduleTap(BuildContext context, String busName) {
+  void _handleBusScheduleTap(BuildContext context, String id, String busName) {
     // Navigate to the BusSeats page
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BusSeats(busName: busName),
+        builder: (context) => BusSeats(id: id, busName: busName),
       ),
     );
   }
-}
-
-void main() {
-  runApp(const MaterialApp(
-    home: BusSchedule(),
-  ));
 }
